@@ -5,19 +5,13 @@ const gameBoard = (function () {
 				   null, null, null,
 				  ];
 
-	let currentPlayer = 'X';
-
 	function boardState() {
 		return board;
 	}
 
-	function getCurrentPlayer() {
-		return currentPlayer
-	}
-
-	function changeCurrentPlayer() {
-		currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-	}
-
-	return { boardState, getCurrentPlayer, changeCurrentPlayer };
+	return { boardState };
 })();
+
+function createPlayer(name, side) {
+	return { name, side };
+}
