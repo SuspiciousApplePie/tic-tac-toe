@@ -15,10 +15,16 @@ const game = (function () {
 
 const gameController = (function () {
 	let gameState = false;
+	const marker = {
+		x: 'X',
+		o: 'O',
+	}
 
 	function startGame() {
 		gameState = true;
-		return gameState;
+		let player1 = createPlayer('Yukino', marker.x);
+		let player2 = createPlayer('Charlotte', marker.o);
+		return { gameState, player1, player2 } ;
 	}
 
 	function endGame() {
@@ -33,3 +39,7 @@ const gameController = (function () {
 	return { startGame, endGame, getState };
 
 })();
+
+function createPlayer (name, marker) {
+	return { name, marker };
+}
