@@ -60,7 +60,16 @@ const gameController = (function () {
 		}
 	}
 
-	return { startGame, endGame, getState, getPlayer, setCurrentPlayer };
+	function getPlayerMove(position) {
+		if (gameState) {
+			game.getBoard()[position - 1] = currentPlayer.marker;
+			gameController.setCurrentPlayer();
+		} else {
+			return null;
+		}
+	}
+
+	return { startGame, endGame, getState, getPlayer, setCurrentPlayer, getPlayerMove };
 
 })();
 
