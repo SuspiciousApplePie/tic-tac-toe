@@ -30,19 +30,37 @@ const gameController = (function () {
 
 	function endGame() {
 		gameState = false;
-		return gameState;
+		return { gameState };
 	}
 
 	function getState() {
-		return gameState;
+		return { gameState };
 	}
 
-	function makeMatch() {
-		[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
-		return { player1, player2 }; 
+	function getPlayer() {
+		if (gameState) {
+			[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
+			return { player1, player2 };
+		} else {
+			return 'Game havent started yet';
+		}
 	}
 
-	return { startGame, endGame, getState, makeMatch };
+	function setCurrentPlayer() {
+		if (gameState) {
+			if (currentPlayer === player1) {
+				currentPlayer = player2;
+			} else if ( currentPlayer === player2 || !currentPlayer ) {
+				currentPlayer = player1;
+			}
+
+			return { currentPlayer };
+		} else {
+			return 'Game havent started yet';
+		}
+	}
+
+	return { startGame, endGame, getState, getPlayer, setCurrentPlayer };
 
 })();
 
