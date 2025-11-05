@@ -15,6 +15,9 @@ const game = (function () {
 
 const gameController = (function () {
 	let gameState = false;
+	let player1 = null;
+	let player2 = null;
+	let currentPlayer = null;
 	const marker = {
 		x: 'X',
 		o: 'O',
@@ -22,9 +25,7 @@ const gameController = (function () {
 
 	function startGame() {
 		gameState = true;
-		let player1 = createPlayer('Yukino', marker.x);
-		let player2 = createPlayer('Charlotte', marker.o);
-		return { gameState, player1, player2 } ;
+		return { gameState } ;
 	}
 
 	function endGame() {
@@ -36,7 +37,12 @@ const gameController = (function () {
 		return gameState;
 	}
 
-	return { startGame, endGame, getState };
+	function makeMatch() {
+		[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
+		return { player1, player2 }; 
+	}
+
+	return { startGame, endGame, getState, makeMatch };
 
 })();
 
