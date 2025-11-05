@@ -1,36 +1,35 @@
-const gameBoard = (function () {
+const game = (function () {
 	const board = [
 				   null, null, null,
 				   null, null, null,
 				   null, null, null,
 				  ];
 
-	function boardState() {
+	function getBoard() {
 		return board;
 	}
 
-	return { boardState };
+	return { getBoard };
 })();
 
-function createPlayer(name, side) {
-	return { name, side };
-}
 
-function setGame() {
-	const role = {
-		x: 'X',
-		o: 'O',
+const gameController = (function () {
+	let gameState = false;
+
+	function startGame() {
+		gameState = true;
+		return gameState;
 	}
 
-	function makeMatch () {
-		let name1 = prompt('1');
-		let playerOne = createPlayer(name1, role.x);
-
-		let name2 = prompt('2');
-		let playerTwo = createPlayer(name2, role.o);
-
-		return { playerOne, playerTwo };
+	function endGame() {
+		gameState = false;
+		return gameState;
 	}
 
-	return { makeMatch };
-}
+	function getState() {
+		return gameState;
+	}
+
+	return { startGame, endGame, getState };
+
+})();
