@@ -12,9 +12,7 @@ const game = (function () {
 	return { getBoard };
 })();
 
-
-const gameController = (function () {
-	let gameState = false;
+const player = (function () {
 	let player1 = null;
 	let player2 = null;
 	let currentPlayer = null;
@@ -22,6 +20,46 @@ const gameController = (function () {
 		x: 'X',
 		o: 'O',
 	}
+
+	function getPlayer() {
+		if (gameController.getState().gameState) {
+			[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
+			return { player1, player2 };
+		} else {
+			return 'Game havent started yet';
+		}
+	}
+
+	function setCurrentPlayer() {
+		if (gameController.getState().gameState) {
+			if (currentPlayer === player1) {
+				currentPlayer = player2;
+			} else if ( currentPlayer === player2 || !currentPlayer ) {
+				currentPlayer = player1;
+			}
+
+			return { currentPlayer };
+		} else {
+			return 'Game havent started yet';
+		}
+	}
+
+	function getPlayerMove(position) {
+		if (gameController.getState().gameState) {
+			game.getBoard()[position - 1] = currentPlayer.marker;
+			game.getBoard();
+			player.setCurrentPlayer();
+		} else {
+			return null;
+		}
+	}
+
+	return { getPlayer, getPlayerMove, setCurrentPlayer };
+})();
+
+
+const gameController = (function () {
+	let gameState = false;
 
 	function startGame() {
 		gameState = true;
@@ -37,39 +75,7 @@ const gameController = (function () {
 		return { gameState };
 	}
 
-	function getPlayer() {
-		if (gameState) {
-			[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
-			return { player1, player2 };
-		} else {
-			return 'Game havent started yet';
-		}
-	}
-
-	function setCurrentPlayer() {
-		if (gameState) {
-			if (currentPlayer === player1) {
-				currentPlayer = player2;
-			} else if ( currentPlayer === player2 || !currentPlayer ) {
-				currentPlayer = player1;
-			}
-
-			return { currentPlayer };
-		} else {
-			return 'Game havent started yet';
-		}
-	}
-
-	function getPlayerMove(position) {
-		if (gameState) {
-			game.getBoard()[position - 1] = currentPlayer.marker;
-			gameController.setCurrentPlayer();
-		} else {
-			return null;
-		}
-	}
-
-	return { startGame, endGame, getState, getPlayer, setCurrentPlayer, getPlayerMove };
+	return { startGame, endGame, getState };
 
 })();
 
