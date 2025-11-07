@@ -10,20 +10,50 @@ const game = (function () {
 		return board;
 	}
 
-	function putPlayerMove(position, marker) {
+	function putPlayerMove(position, currentPlayer) {
 		if (gameController.getState() === false) return 'Game havent started yet'; 
 		if (position < 0 || position > 8) {
-			console.log('Out of range');
+			return 'out of range';
 		} else if (board[position] !== null) {
-			console.log('taken');
+			return 'taken';
 		} else {
-			board[position] = marker;
-			player.setCurrentPlayer();
+			board[position] = currentPlayer.marker;
 			console.log(board);
+		}
+
+		if (game.checkWin(currentPlayer) === true) {
+			 console.log(`${currentPlayer.name} wins`);
+		} else {
+			player.setCurrentPlayer();
 		}
 	}
 
-	return { getBoard, putPlayerMove };
+	function checkWin(currentPlayer) {
+		// Vertical
+		if (board[0] === currentPlayer.marker && board[3] === currentPlayer.marker && board[6] === currentPlayer.marker) {
+			return true;
+		} else if (board[1] === currentPlayer.marker && board[4] === currentPlayer.marker && board[7] === currentPlayer.marker) {
+			return true;
+		} else if (board[2] === currentPlayer.marker && board[5] === currentPlayer.marker && board[8] === currentPlayer.marker) {
+			return true;
+		// Horizontal
+		} else if (board[0] === currentPlayer.marker && board[1] === currentPlayer.marker && board[2] === currentPlayer.marker) {
+			return true;
+		} else if (board[3] === currentPlayer.marker && board[4] === currentPlayer.marker && board[5] === currentPlayer.marker) {
+			return true;
+		} else if (board[6] === currentPlayer.marker && board[7] === currentPlayer.marker && board[8] === currentPlayer.marker) {
+			return true;
+		// Diagoonal
+		} else if (board[0] === currentPlayer.marker && board[4] === currentPlayer.marker && board[8] === currentPlayer.marker) {
+			return true;
+		} else if (board[2] === currentPlayer.marker && board[4] === currentPlayer.marker && board[6] === currentPlayer.marker) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	return { getBoard, putPlayerMove, checkWin };
 })();
 
 const player = (function () {
@@ -53,7 +83,7 @@ const player = (function () {
 
 	function getPlayerMove(position) {
 		if (gameController.getState() === false) return 'Game havent started yet'; 
-		game.putPlayerMove(position - 1, currentPlayer.marker);
+		game.putPlayerMove(position - 1, currentPlayer);
 	}
 
 	return { getPlayer, getPlayerMove, setCurrentPlayer };
