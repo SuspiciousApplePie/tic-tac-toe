@@ -9,7 +9,20 @@ const game = (function () {
 		return board;
 	}
 
-	return { getBoard };
+	function putPlayerMove(position, marker) {
+		if (gameController.getState() === false) return false;
+		if (position < 0 || position > 8) {
+			console.log('Out of range');
+		} else if (board[position] !== null) {
+			console.log('taken');
+		} else {
+			board[position] = marker;
+			player.setCurrentPlayer();
+			console.log(board);
+		}
+	}
+
+	return { getBoard, putPlayerMove };
 })();
 
 const player = (function () {
@@ -22,16 +35,15 @@ const player = (function () {
 	}
 
 	function getPlayer() {
-		if (gameController.getState().gameState) {
+		if (gameController.getState() === true) {
 			[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
-			return { player1, player2 };
 		} else {
 			return 'Game havent started yet';
 		}
 	}
 
 	function setCurrentPlayer() {
-		if (gameController.getState().gameState) {
+		if (gameController.getState() === true) {
 			if (currentPlayer === player1) {
 				currentPlayer = player2;
 			} else if ( currentPlayer === player2 || !currentPlayer ) {
@@ -45,12 +57,10 @@ const player = (function () {
 	}
 
 	function getPlayerMove(position) {
-		if (gameController.getState().gameState) {
-			game.getBoard()[position - 1] = currentPlayer.marker;
-			game.getBoard();
-			player.setCurrentPlayer();
+		if (gameController.getState() === true) {
+			game.putPlayerMove(position - 1, currentPlayer.marker);
 		} else {
-			return null;
+			return false;
 		}
 	}
 
@@ -63,16 +73,14 @@ const gameController = (function () {
 
 	function startGame() {
 		gameState = true;
-		return { gameState } ;
 	}
 
 	function endGame() {
 		gameState = false;
-		return { gameState };
 	}
 
 	function getState() {
-		return { gameState };
+		return gameState;
 	}
 
 	return { startGame, endGame, getState };
