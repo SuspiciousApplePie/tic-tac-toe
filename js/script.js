@@ -6,11 +6,12 @@ const game = (function () {
 				  ];
 
 	function getBoard() {
+		if (gameController.getState() === false) return 'Game havent started yet'; 
 		return board;
 	}
 
 	function putPlayerMove(position, marker) {
-		if (gameController.getState() === false) return false;
+		if (gameController.getState() === false) return 'Game havent started yet'; 
 		if (position < 0 || position > 8) {
 			console.log('Out of range');
 		} else if (board[position] !== null) {
@@ -35,33 +36,24 @@ const player = (function () {
 	}
 
 	function getPlayer() {
-		if (gameController.getState() === true) {
-			[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
-		} else {
-			return 'Game havent started yet';
-		}
+		if (gameController.getState() === false) return 'Game havent started yet'; 
+		[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
 	}
 
 	function setCurrentPlayer() {
-		if (gameController.getState() === true) {
-			if (currentPlayer === player1) {
-				currentPlayer = player2;
-			} else if ( currentPlayer === player2 || !currentPlayer ) {
-				currentPlayer = player1;
-			}
-
-			return { currentPlayer };
-		} else {
-			return 'Game havent started yet';
+		if (gameController.getState() === false) return 'Game havent started yet';
+		if (currentPlayer === player1) {
+			currentPlayer = player2;
+		} else if ( currentPlayer === player2 || !currentPlayer ) {
+			currentPlayer = player1;
 		}
+
+		return { currentPlayer };
 	}
 
 	function getPlayerMove(position) {
-		if (gameController.getState() === true) {
-			game.putPlayerMove(position - 1, currentPlayer.marker);
-		} else {
-			return false;
-		}
+		if (gameController.getState() === false) return 'Game havent started yet'; 
+		game.putPlayerMove(position - 1, currentPlayer.marker);
 	}
 
 	return { getPlayer, getPlayerMove, setCurrentPlayer };
