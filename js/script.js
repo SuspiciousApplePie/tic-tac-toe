@@ -1,9 +1,9 @@
 const game = (function () {
-	const board = [
-				   null, null, null,
-				   null, null, null,
-				   null, null, null,
-				  ];
+	let board = [
+				  null, null, null,
+				  null, null, null,
+				  null, null, null,
+				];
 
 	function getBoard() {
 		if (gameController.getState() === false) return 'Game havent started yet'; 
@@ -23,6 +23,7 @@ const game = (function () {
 
 		if (game.checkWin(currentPlayer) === true) {
 			 console.log(`${currentPlayer.name} wins`);
+			 gameController.endGame();
 		} else {
 			player.setCurrentPlayer();
 		}
@@ -53,7 +54,15 @@ const game = (function () {
 		}
 	}
 
-	return { getBoard, putPlayerMove, checkWin };
+	function resetBoard() {
+		board = [
+				  null, null, null,
+				  null, null, null,
+				  null, null, null,
+				];
+	}
+
+	return { getBoard, putPlayerMove, checkWin, resetBoard };
 })();
 
 const player = (function () {
@@ -86,7 +95,13 @@ const player = (function () {
 		game.putPlayerMove(position - 1, currentPlayer);
 	}
 
-	return { getPlayer, getPlayerMove, setCurrentPlayer };
+	function resetPlayer() {
+		player1 = null;
+		player2 = null;
+		currentPlayer = null;
+	}
+
+	return { getPlayer, getPlayerMove, setCurrentPlayer, resetPlayer };
 })();
 
 
@@ -101,11 +116,16 @@ const gameController = (function () {
 		gameState = false;
 	}
 
+	function reset() {
+		game.resetBoard();
+		player.resetPlayer();
+	}
+
 	function getState() {
 		return gameState;
 	}
 
-	return { startGame, endGame, getState };
+	return { startGame, endGame, getState, reset };
 
 })();
 
