@@ -21,15 +21,7 @@ const game = (function () {
 			console.log(board);
 		}
 
-		if (game.checkWin(currentPlayer) === true) {
-			console.log(`${currentPlayer.name} wins`);
-			gameController.endGame();
-		} else if (game.hasEmptySlot() === false) {
-			console.log('Tie');
-			gameController.endGame();
-		} else {
-			player.setCurrentPlayer();
-		}
+		game.checkWinner(currentPlayer);
 	}
 
 	function checkWin(currentPlayer) {
@@ -61,6 +53,18 @@ const game = (function () {
 		return board.includes(null);
 	}
 
+	function checkWinner(currentPlayer) {
+		if (game.checkWin(currentPlayer) === true) {
+			console.log(`${currentPlayer.name} wins`);
+			gameController.endGame();
+		} else if (game.hasEmptySlot() === false) {
+			console.log('Tie');
+			gameController.endGame();
+		} else {
+			player.setCurrentPlayer();
+		}
+	}
+
 	function resetBoard() {
 		board = [
 				  null, null, null,
@@ -69,7 +73,7 @@ const game = (function () {
 				];
 	}
 
-	return { getBoard, putPlayerMove, checkWin, hasEmptySlot, resetBoard };
+	return { getBoard, putPlayerMove, checkWin, hasEmptySlot, resetBoard, checkWinner };
 })();
 
 const player = (function () {
@@ -117,9 +121,12 @@ const gameController = (function () {
 
 	function startGame() {
 		gameState = true;
+		player.getPlayer();
+		player.setCurrentPlayer();
 	}
 
 	function endGame() {
+		game.resetBoard();
 		gameState = false;
 	}
 
