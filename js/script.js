@@ -24,7 +24,7 @@ const game = (function () {
 		game.checkWinner(currentPlayer);
 	}
 
-	function checkWin(currentPlayer) {
+	function checkWinCondition(currentPlayer) {
 		// Vertical
 		if (board[0] === currentPlayer.marker && board[3] === currentPlayer.marker && board[6] === currentPlayer.marker) {
 			return true;
@@ -54,7 +54,7 @@ const game = (function () {
 	}
 
 	function checkWinner(currentPlayer) {
-		if (game.checkWin(currentPlayer) === true) {
+		if (game.checkWinCondition(currentPlayer) === true) {
 			console.log(`${currentPlayer.name} wins`);
 			gameController.endGame();
 		} else if (game.hasEmptySlot() === false) {
@@ -73,13 +73,13 @@ const game = (function () {
 				];
 	}
 
-	return { getBoard, putPlayerMove, checkWin, hasEmptySlot, resetBoard, checkWinner };
+	return { getBoard, putPlayerMove, checkWinCondition, hasEmptySlot, resetBoard, checkWinner };
 })();
 
 const player = (function () {
 	let player1 = null;
 	let player2 = null;
-	let currentPlayer = null;
+	let currentPlayer = {name: null, marker: null,};
 	const marker = {
 		x: 'X',
 		o: 'O',
@@ -92,12 +92,11 @@ const player = (function () {
 
 	function setCurrentPlayer() {
 		if (gameController.getState() === false) return 'Game havent started yet';
-		if (currentPlayer === player1) {
+		if (currentPlayer.marker === player1.marker) {
 			currentPlayer = player2;
-		} else if ( currentPlayer === player2 || !currentPlayer ) {
+		} else if ( currentPlayer.marker === player2.marker || !currentPlayer.marker ) {
 			currentPlayer = player1;
 		}
-
 		return { currentPlayer };
 	}
 
@@ -109,7 +108,7 @@ const player = (function () {
 	function resetPlayer() {
 		player1 = null;
 		player2 = null;
-		currentPlayer = null;
+		currentPlayer = {name: null, marker: null,};
 	}
 
 	return { getPlayer, getPlayerMove, setCurrentPlayer, resetPlayer };
@@ -126,7 +125,7 @@ const gameController = (function () {
 	}
 
 	function endGame() {
-		game.resetBoard();
+		gameController.reset();
 		gameState = false;
 	}
 
