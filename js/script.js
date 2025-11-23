@@ -142,6 +142,16 @@ const gameController = (function () {
 
 })();
 
+const displayController = (function (){
+	const container = document.querySelector('.container');
+
+	container.addEventListener('click', handleClick);
+
+	function handleClick(e) {
+	 	console.log(e);
+	} 
+})();
+
 function createPlayer (name, marker) {
 	return { name, marker };
 }
