@@ -144,12 +144,25 @@ const gameController = (function () {
 
 const displayController = (function (){
 	const container = document.querySelector('.container');
+	const main = document.querySelector('main');
 
 	container.addEventListener('click', handleClick);
+	generateButton();
 
 	function handleClick(e) {
-	 	console.log(e);
-	} 
+	 	if (e.target.id === 'startGame') startGame();
+	}
+
+	function startGame() {
+		gameController.startGame();
+	}
+
+	function generateButton() {
+		const startButton = document.createElement('button');
+		startButton.id = 'startGame'
+		startButton.textContent = 'Start';
+		main.appendChild(startButton);
+	}
 })();
 
 function createPlayer (name, marker) {
