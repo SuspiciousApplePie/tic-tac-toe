@@ -147,6 +147,7 @@ const displayController = (function (){
 	const main = document.querySelector('main');
 
 	container.addEventListener('click', handleClick);
+	generateTitle();
 	generateButton();
 
 	function handleClick(e) {
@@ -155,6 +156,12 @@ const displayController = (function (){
 
 	function startGame() {
 		gameController.startGame();
+	}
+
+	function generateTitle() {
+		const title = document.createElement('h1');
+		title.textContent = 'Tic Tac Toe';
+		main.appendChild(title);
 	}
 
 	function generateButton() {
