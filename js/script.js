@@ -205,6 +205,13 @@ const displayController = (function (){
 		main.appendChild(wrapper);
 	}
 
+	function getPlayerName() {
+		const player1 = document.querySelector('#player1').value;
+		const player2 = document.querySelector('#player2').value;
+
+		return { player1, player2 };
+	}
+
 	return { getPlayerName };
 })();
 
