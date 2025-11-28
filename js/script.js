@@ -191,6 +191,21 @@ const displayController = (function (){
 		}
 	}
 
+	function generateGameBoard() {
+		main.innerHTML = '';
+		const wrapper = document.createElement('div');
+		wrapper.className = 'board-wrapper';
+
+		for (cellNumber = 0; cellNumber <= 8; cellNumber++) {
+			let cell = document.createElement('div');
+			cell.className = 'cell';
+			wrapper.appendChild(cell);
+		}
+
+		main.appendChild(wrapper);
+	}
+
+	return { getPlayerName };
 })();
 
 function createPlayer (name, marker) {
