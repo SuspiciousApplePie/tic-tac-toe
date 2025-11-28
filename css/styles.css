@@ -1,0 +1,14 @@
+main {
+	height: 300px;
+}
+
+.board-wrapper {
+	height: 300px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+}
+
+.cell {
+	border: 1px solid #333;
+}

@@ -147,15 +147,17 @@ const displayController = (function (){
 	const main = document.querySelector('main');
 
 	container.addEventListener('click', handleClick);
+	generatePlayerNameInput();
 	generateTitle();
 	generateButton();
+	getPlayerName();
 
 	function handleClick(e) {
 	 	if (e.target.id === 'startGame') startGame();
 	}
 
 	function startGame() {
-		gameController.startGame();
+		generateGameBoard();
 	}
 
 	function generateTitle() {
@@ -170,6 +172,25 @@ const displayController = (function (){
 		startButton.textContent = 'Start';
 		main.appendChild(startButton);
 	}
+
+	function  generatePlayerNameInput() {
+		for (playerNumber = 0; playerNumber < 2; playerNumber++) {
+			const nameLabel = document.createElement(`label`);
+			nameLabel.htmlFor = `player${playerNumber + 1}`;
+			nameLabel.innerText = `Player ${playerNumber + 1}`;
+
+
+			const nameField = document.createElement('input');
+			nameField.type = 'text';
+			nameField.className = 'name-field';
+			nameField.name = `player${playerNumber + 1}`;
+			nameField.id = `player${playerNumber + 1}`;
+
+			main.appendChild(nameLabel);
+			main.appendChild(nameField);
+		}
+	}
+
 })();
 
 function createPlayer (name, marker) {
