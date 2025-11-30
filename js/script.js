@@ -102,7 +102,7 @@ const player = (function () {
 
 	function getPlayerMove(position) {
 		if (gameController.getState() === false) return 'Game havent started yet'; 
-		game.putPlayerMove(position - 1, currentPlayer);
+		game.putPlayerMove(position, currentPlayer);
 	}
 
 	function resetPlayer() {
@@ -145,6 +145,10 @@ const gameController = (function () {
 const displayController = (function (){
 	const container = document.querySelector('.container');
 	const main = document.querySelector('main');
+	const marker = {
+		x: 'X',
+		o: 'O',
+	}
 
 	container.addEventListener('click', handleClick);
 	generatePlayerNameInput();
@@ -154,10 +158,15 @@ const displayController = (function (){
 
 	function handleClick(e) {
 	 	if (e.target.id === 'startGame') startGame();
+	 	else if (e.target.className === 'cell') {
+	 		player.getPlayerMove(e.target.dataset.cellSlot);
+	 		displayGameBoard();
+	 	};
 	}
 
 	function startGame() {
-		generateGameBoard();
+		gameController.startGame();
+		displayGameBoard();
 	}
 
 	function generateTitle() {
@@ -191,13 +200,19 @@ const displayController = (function (){
 		}
 	}
 
-	function generateGameBoard() {
+	function displayGameBoard() {
 		main.innerHTML = '';
 		const wrapper = document.createElement('div');
 		wrapper.className = 'board-wrapper';
 
 		for (cellNumber = 0; cellNumber <= 8; cellNumber++) {
 			let cell = document.createElement('div');
+			if (game.getBoard()[cellNumber] === marker.x) {
+				cell.textContent = marker.x;
+			} else if (game.getBoard()[cellNumber] === marker.o) {
+				cell.textContent = marker.o;
+			}
+			cell.dataset.cellSlot = cellNumber;
 			cell.className = 'cell';
 			wrapper.appendChild(cell);
 		}
