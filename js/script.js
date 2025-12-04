@@ -18,7 +18,7 @@ const game = (function () {
 			return 'taken';
 		} else {
 			board[position] = currentPlayer.marker;
-			console.log(board);
+			displayController.displayGameBoard();
 		}
 
 		game.checkWinner(currentPlayer);
@@ -55,10 +55,14 @@ const game = (function () {
 
 	function checkWinner(currentPlayer) {
 		if (game.checkWinCondition(currentPlayer) === true) {
-			console.log(`${currentPlayer.name} wins`);
+			const result = `The winner is ${currentPlayer.name}`;
+			displayController.displayResult(result);
+			displayController.displayPostGameButton();
 			gameController.endGame();
 		} else if (game.hasEmptySlot() === false) {
-			console.log('Tie');
+			const result = 'Tie';
+			displayController.displayResult(result);
+			displayController.displayPostGameButton();
 			gameController.endGame();
 		} else {
 			player.setCurrentPlayer();
@@ -125,8 +129,11 @@ const gameController = (function () {
 	}
 
 	function endGame() {
-		gameController.reset();
 		gameState = false;
+	}
+
+	function restartGame () {
+		game.resetBoard();
 	}
 
 	function reset() {
@@ -138,13 +145,14 @@ const gameController = (function () {
 		return gameState;
 	}
 
-	return { startGame, endGame, getState, reset };
+	return { startGame, endGame, getState, reset, restartGame };
 
 })();
 
 const displayController = (function (){
 	const container = document.querySelector('.container');
 	const main = document.querySelector('main');
+	const footer = document.querySelector('footer');
 	const marker = {
 		x: 'X',
 		o: 'O',
@@ -160,8 +168,12 @@ const displayController = (function (){
 	 	if (e.target.id === 'startGame') startGame();
 	 	else if (e.target.className === 'cell') {
 	 		player.getPlayerMove(e.target.dataset.cellSlot);
+	 	} else if (e.target.id === 'restart-game') {
+	 		gameController.reset();
+	 		gameController.startGame();
+	 		footer.innerHTML = '';
 	 		displayGameBoard();
-	 	};
+	 	}
 	}
 
 	function startGame() {
@@ -227,7 +239,29 @@ const displayController = (function (){
 		return { player1, player2 };
 	}
 
-	return { getPlayerName };
+	function displayResult(result) {
+		const resultCard = document.createElement('div');
+		resultCard.className = 'result-card';
+		resultCard.textContent = result;
+		footer.appendChild(resultCard);
+	}
+
+	function displayPostGameButton() {
+		const restartButton = document.createElement('button');
+		restartButton.textContent = 'Restart';
+		restartButton.className = 'button';
+		restartButton.id = 'restart-game'
+
+
+		const endGameButton = document.createElement('button');
+		endGameButton.textContent = 'Back';
+		endGameButton.className = 'button';
+
+		footer.appendChild(restartButton);
+		footer.appendChild(endGameButton);
+	}
+
+	return { getPlayerName, displayGameBoard, displayResult, displayPostGameButton };
 })();
 
 function createPlayer (name, marker) {
