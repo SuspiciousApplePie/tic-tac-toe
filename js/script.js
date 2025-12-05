@@ -159,10 +159,7 @@ const displayController = (function (){
 	}
 
 	container.addEventListener('click', handleClick);
-	generatePlayerNameInput();
-	generateTitle();
-	generateButton();
-	getPlayerName();
+	generateMenu();
 
 	function handleClick(e) {
 	 	if (e.target.id === 'startGame') startGame();
@@ -173,7 +170,18 @@ const displayController = (function (){
 	 		gameController.startGame();
 	 		footer.innerHTML = '';
 	 		displayGameBoard();
+	 	} else if (e.target.id === 'back') {
+	 		gameController.reset();
+	 		main.innerHTML = '';
+	 		footer.innerHTML = '';
+	 		generateMenu();
 	 	}
+	}
+
+	function generateMenu () {
+		generatePlayerNameInput();
+		generateTitle();
+		generateButton();
 	}
 
 	function startGame() {
@@ -189,7 +197,7 @@ const displayController = (function (){
 
 	function generateButton() {
 		const startButton = document.createElement('button');
-		startButton.id = 'startGame'
+		startButton.id = 'startGame';
 		startButton.textContent = 'Start';
 		main.appendChild(startButton);
 	}
@@ -256,6 +264,7 @@ const displayController = (function (){
 		const endGameButton = document.createElement('button');
 		endGameButton.textContent = 'Back';
 		endGameButton.className = 'button';
+		endGameButton.id = 'back';
 
 		footer.appendChild(restartButton);
 		footer.appendChild(endGameButton);
