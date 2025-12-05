@@ -91,7 +91,7 @@ const player = (function () {
 
 	function getPlayer() {
 		if (gameController.getState() === false) return 'Game havent started yet'; 
-		[ player1, player2 ] = [ createPlayer('Yukino', marker.x), createPlayer('Charlotte', marker.o) ];
+		[ player1, player2 ] = [ createPlayer(displayController.getPlayerName().player1, marker.x), createPlayer(displayController.getPlayerName().player2, marker.o) ];
 	}
 
 	function setCurrentPlayer() {
@@ -112,10 +112,13 @@ const player = (function () {
 	function resetPlayer() {
 		player1 = null;
 		player2 = null;
+	}
+
+	function resetCurrentPlayer() {
 		currentPlayer = {name: null, marker: null,};
 	}
 
-	return { getPlayer, getPlayerMove, setCurrentPlayer, resetPlayer };
+	return { getPlayer, getPlayerMove, setCurrentPlayer, resetPlayer, resetCurrentPlayer };
 })();
 
 
@@ -124,8 +127,6 @@ const gameController = (function () {
 
 	function startGame() {
 		gameState = true;
-		player.getPlayer();
-		player.setCurrentPlayer();
 	}
 
 	function endGame() {
@@ -139,6 +140,7 @@ const gameController = (function () {
 	function reset() {
 		game.resetBoard();
 		player.resetPlayer();
+		player.resetCurrentPlayer();
 	}
 
 	function getState() {
@@ -166,9 +168,11 @@ const displayController = (function (){
 	 	else if (e.target.className === 'cell') {
 	 		player.getPlayerMove(e.target.dataset.cellSlot);
 	 	} else if (e.target.id === 'restart-game') {
-	 		gameController.reset();
-	 		gameController.startGame();
 	 		footer.innerHTML = '';
+	 		gameController.startGame();
+	 		player.resetCurrentPlayer();
+	 		player.setCurrentPlayer();
+	 		game.resetBoard();
 	 		displayGameBoard();
 	 	} else if (e.target.id === 'back') {
 	 		gameController.reset();
@@ -186,6 +190,8 @@ const displayController = (function (){
 
 	function startGame() {
 		gameController.startGame();
+		player.getPlayer();
+		player.setCurrentPlayer();
 		displayGameBoard();
 	}
 
