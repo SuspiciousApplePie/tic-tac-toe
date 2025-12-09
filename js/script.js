@@ -209,10 +209,17 @@ const displayController = (function (){
 	}
 
 	function  generatePlayerNameInput() {
+		const inputWrapper = document.createElement('div');
+		inputWrapper.className = 'name-field-wrapper';
+
 		for (playerNumber = 0; playerNumber < 2; playerNumber++) {
+			const fieldWrapper = document.createElement('div');
+			fieldWrapper.className = 'name-field-wrapper';
+
 			const nameLabel = document.createElement(`label`);
 			nameLabel.htmlFor = `player${playerNumber + 1}`;
 			nameLabel.innerText = `Player ${playerNumber + 1}`;
+			fieldWrapper.appendChild(nameLabel);
 
 
 			const nameField = document.createElement('input');
@@ -220,10 +227,12 @@ const displayController = (function (){
 			nameField.className = 'name-field';
 			nameField.name = `player${playerNumber + 1}`;
 			nameField.id = `player${playerNumber + 1}`;
+			fieldWrapper.appendChild(nameField);
 
-			main.appendChild(nameLabel);
-			main.appendChild(nameField);
+			inputWrapper.appendChild(fieldWrapper);	
 		}
+
+		main.appendChild(inputWrapper);
 	}
 
 	function displayGameBoard() {
@@ -261,19 +270,23 @@ const displayController = (function (){
 	}
 
 	function displayPostGameButton() {
+
+		const buttonWrapper = document.createElement('div');
+		resultWrapper.className = 'button-wrapper';
+
 		const restartButton = document.createElement('button');
 		restartButton.textContent = 'Restart';
 		restartButton.className = 'button';
 		restartButton.id = 'restart-game'
-
+		buttonWrapper.appendChild(restartButton);
 
 		const endGameButton = document.createElement('button');
 		endGameButton.textContent = 'Back';
 		endGameButton.className = 'button';
 		endGameButton.id = 'back';
+		buttonWrapper.appendChild(endGameButton);
 
-		footer.appendChild(restartButton);
-		footer.appendChild(endGameButton);
+		footer.appendChild(buttonWrapper);
 	}
 
 	return { getPlayerName, displayGameBoard, displayResult, displayPostGameButton };
