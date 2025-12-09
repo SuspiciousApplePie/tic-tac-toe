@@ -196,16 +196,23 @@ const displayController = (function (){
 	}
 
 	function generateTitle() {
+		const titleSection = document.createElement('section');
+		titleSection.className = 'title';
 		const title = document.createElement('h1');
 		title.textContent = 'Tic Tac Toe';
-		main.appendChild(title);
+		titleSection.appendChild(title);
+
+		main.appendChild(titleSection);
 	}
 
 	function generateButton() {
+		const buttonWrapper = document.createElement('div');
+		buttonWrapper.className = 'main-menu-wrapper';
 		const startButton = document.createElement('button');
 		startButton.id = 'startGame';
 		startButton.textContent = 'Start';
-		main.appendChild(startButton);
+		buttonWrapper.appendChild(startButton);
+		main.appendChild(buttonWrapper);
 	}
 
 	function  generatePlayerNameInput() {
@@ -272,7 +279,7 @@ const displayController = (function (){
 	function displayPostGameButton() {
 
 		const buttonWrapper = document.createElement('div');
-		resultWrapper.className = 'button-wrapper';
+		buttonWrapper.className = 'button-wrapper';
 
 		const restartButton = document.createElement('button');
 		restartButton.textContent = 'Restart';
