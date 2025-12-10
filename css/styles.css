@@ -68,3 +68,24 @@
 	grid-template-rows: repeat(3, 1fr);
 	grid-template-columns: repeat(3, 1fr);
 }
+
+.board-wrapper .cell {
+	border: 1px solid black;
+}
+
+footer {
+	display: grid;
+	grid-template-rows: repeat(2, 1fr);
+	justify-content: center;
+	align-items: center;
+}
+
+footer .result-card {
+	text-align: center;
+}
+
+footer .button-wrapper {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 2rem;
+}
