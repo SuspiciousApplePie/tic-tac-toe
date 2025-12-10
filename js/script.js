@@ -210,6 +210,7 @@ const displayController = (function (){
 		const buttonWrapper = document.createElement('div');
 		buttonWrapper.className = 'main-menu-wrapper';
 		const startButton = document.createElement('button');
+		startButton.className = 'button start';
 		startButton.id = 'startGame';
 		startButton.textContent = 'Start';
 		buttonWrapper.appendChild(startButton);
@@ -285,13 +286,13 @@ const displayController = (function (){
 
 		const restartButton = document.createElement('button');
 		restartButton.textContent = 'Restart';
-		restartButton.className = 'button';
+		restartButton.className = 'button start';
 		restartButton.id = 'restart-game'
 		buttonWrapper.appendChild(restartButton);
 
 		const endGameButton = document.createElement('button');
 		endGameButton.textContent = 'Back';
-		endGameButton.className = 'button';
+		endGameButton.className = 'button end';
 		endGameButton.id = 'back';
 		buttonWrapper.appendChild(endGameButton);
 

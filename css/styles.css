@@ -26,7 +26,7 @@
 .main-menu .input-field-wrapper {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	width: 800px;
+	width: 80vw;
 }
 
 .name-field-wrapper:nth-child(2) {
@@ -47,4 +47,9 @@
 
 .main-menu h1 {
 	font-size: 3rem;
+}
+
+.button {
+	height: 2em;
+	width: 8em;
 }
