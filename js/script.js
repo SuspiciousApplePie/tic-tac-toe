@@ -183,6 +183,7 @@ const displayController = (function (){
 	}
 
 	function generateMenu () {
+		main.className = 'main-menu';
 		generatePlayerNameInput();
 		generateTitle();
 		generateButton();
@@ -217,7 +218,7 @@ const displayController = (function (){
 
 	function  generatePlayerNameInput() {
 		const inputWrapper = document.createElement('div');
-		inputWrapper.className = 'name-field-wrapper';
+		inputWrapper.className = 'input-field-wrapper';
 
 		for (playerNumber = 0; playerNumber < 2; playerNumber++) {
 			const fieldWrapper = document.createElement('div');
@@ -244,6 +245,7 @@ const displayController = (function (){
 
 	function displayGameBoard() {
 		main.innerHTML = '';
+		main.className = 'board-section';
 		const wrapper = document.createElement('div');
 		wrapper.className = 'board-wrapper';
 
