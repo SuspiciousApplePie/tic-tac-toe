@@ -17,6 +17,9 @@
 :root {
 	--title-font-size: 3rem;
 	--main-font: 'rustic_shineregular';
+	--main-color: #314cb6;
+	--secondary-color: #6461a0;
+	--font-color: #efbdeb;
 }
 
 .container,
@@ -24,12 +27,18 @@ input,
 button {
 	font-family: var(--main-font);
 	letter-spacing: 0.1rem;
+	color: var(--font-color);
 }
 
 .container {
 	height: clamp(600px, 100vh, 1080px);
 	display: grid;
 	grid-template-rows: 1fr 2fr 1fr;
+}
+
+.container header,
+.container main {
+	background: var(--main-color);
 }
 
 .container .main-menu {
@@ -59,6 +68,15 @@ button {
 	width: 200px;
 	height: 25px;
 	padding: 4px;
+	background: var(--secondary-color);
+}
+
+input {
+	border: none;
+}
+
+input:focus {
+	outline: 1px solid var(--font-color);
 }
 
 .main-menu h1 {
@@ -68,6 +86,7 @@ button {
 .button {
 	height: 3em;
 	width: 12em;
+	background: var(--secondary-color);
 }
 
 /* For game */
@@ -98,6 +117,7 @@ footer {
 	grid-template-rows: repeat(2, 1fr);
 	justify-content: center;
 	align-items: center;
+	background: var(--secondary-color);
 }
 
 footer .result-card {
