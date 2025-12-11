@@ -23,6 +23,7 @@
 input,
 button {
 	font-family: var(--main-font);
+	letter-spacing: 0.1rem;
 }
 
 .container {
