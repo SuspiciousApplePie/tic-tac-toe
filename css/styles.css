@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'rustic_shineregular';
+    src: url('../fonts/rusticshine-webfont.woff2') format('woff2'),
+         url('../fonts/rusticshine-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 *,
 *::before,
 *::after {
@@ -7,7 +15,14 @@
 }
 
 :root {
-	--title-size: 28px;
+	--title-font-size: 3rem;
+	--main-font: 'rustic_shineregular';
+}
+
+.container,
+input,
+button {
+	font-family: var(--main-font);
 }
 
 .container {
@@ -46,12 +61,12 @@
 }
 
 .main-menu h1 {
-	font-size: 3rem;
+	font-size: var(--title-font-size);
 }
 
 .button {
-	height: 2em;
-	width: 8em;
+	height: 3em;
+	width: 12em;
 }
 
 /* For game */
